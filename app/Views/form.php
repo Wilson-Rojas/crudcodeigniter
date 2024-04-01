@@ -5,7 +5,8 @@
     <title>Formulario</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- STYLES -->
 
@@ -223,18 +224,51 @@
     </div>
 
 </header>
-
-<!-- CONTENT -->
-
+    
 <section>
+    <div class="row">
+        <form action="<?=base_url().'save'?>" method="POST">
+            <div class="row mx-auto">
+                <div class="col-md-12">
+                    <label class="form-label">Nombre Completo</label>
+                    <input type="text" class="form-control"  placeholder="Nombre" name="nombre" id="">
+                    <label class="form-label">Telefono de Contacto</label>
+                    <input type="text" class="form-control" name="telefono"  placeholder="Telefono" id="">
+                    <label class="form-label" >Dirección</label>
+                    <input type="text" class="form-control" name="direccion"  placeholder="Dirección" id="">
+                    <label class="form-label" >Correo</label>
+                    <input type="email" class="form-control" name="correo" placeholder="example@email.com" id=""> 
+                    <br>
+                    <button class="btn btn-primary mb-3" >Enviar</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
+    
+    <div class="row">
+        <h2>Personas</h2>
+        
+        <table class="table table-striped">
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+                <th>Acciones</th>
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+    
+    </div>
 </section>
 
 <div class="further">
     
-
     <section>
-        
+       
     </section>
 
 </div>
