@@ -231,7 +231,7 @@
             <div class="row mx-auto">
                 <div class="col-md-12">
                     <label class="form-label">Nombre Completo</label>
-                    <input type="text" class="form-control"  placeholder="Nombre" name="nombre" id="">
+                    <input type="text" class="form-control" name="nombre" placeholder="Nombre"  id="">
                     <label class="form-label">Telefono de Contacto</label>
                     <input type="text" class="form-control" name="telefono"  placeholder="Telefono" id="">
                     <label class="form-label" >Dirección</label>
@@ -239,7 +239,7 @@
                     <label class="form-label" >Correo</label>
                     <input type="email" class="form-control" name="correo" placeholder="example@email.com" id=""> 
                     <br>
-                    <button class="btn btn-primary mb-3" >Enviar</button>
+                    <button class="btn btn-primary mb-3" type="submit" >Enviar</button>
                 </div>
             </div>
         </form>

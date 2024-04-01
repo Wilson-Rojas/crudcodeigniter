@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DatosModel extends Model
+class FormularioModel extends Model
 {
     protected $table      = 'form';
     protected $primaryKey = 'form_id';
@@ -25,11 +25,4 @@ class DatosModel extends Model
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
-    
-    public function insertar($datos){
-        $Formulario=$this->db->table('form');
-        $Formulario=$insert($datos);
-
-        return $this->db->insertID();
-    }
 }

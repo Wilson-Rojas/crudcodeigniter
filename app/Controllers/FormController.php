@@ -13,17 +13,32 @@ class FormController extends BaseController
     }
 
     public function store()
-    {
-        
-        $datos=[
-            "nombre"=>$_POST['nombre'],
-            "correo"=>$_POST['telefono'],
-            "telefono"=>$_POST['direccion'],
-            "direccion"=>$_POST['correo']
-        ];
-        $form=New FormModel();
-        echo $form->insertar($datos);
+{
+    // Obtener los datos del formulario
+    $nombre = $this->input->post('nombre');
+    $correo = $this->input->post('correo');
+    $telefono = $this->input->post('telefono');
+    $direccion = $this->input->post('direccion');
 
-        //print_r($_POST);
+    // Crear un arreglo con los datos
+    $datos = array(
+        'nombre' => $nombre,
+        'correo' => $correo,
+        'telefono' => $telefono,
+        'direccion' => $direccion
+    );
+
+    // Cargar el modelo de la base de datos
+    $this->load->model('FormModel');
+
+    // Insertar los datos en la base de datos
+    $resultado = $this->FormModel->insertar($datos);
+
+    // Verificar si la inserción fue exitosa
+    if ($resultado) {
+        echo 'Los datos se han insertado correctamente.';
+    } else {
+        echo 'Ha ocurrido un error al insertar los datos.';
     }
+}
 }
