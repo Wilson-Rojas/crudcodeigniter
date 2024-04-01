@@ -9,36 +9,79 @@ class FormController extends BaseController
 {
     public function index()
     {
-        return view('form');
+        $form=New \App\Models\FormModel();
+        $datos=$form->listarnombres();
+        $mensaje = session('mensaje');
+        $data=[
+            "datos"=>$datos,
+            "mensaje" => $mensaje
+        ];
+
+        return view('form', $data);
     }
 
     public function store()
-{
-    // Obtener los datos del formulario
-    $nombre = $this->input->post('nombre');
-    $correo = $this->input->post('correo');
-    $telefono = $this->input->post('telefono');
-    $direccion = $this->input->post('direccion');
+    {
+        
+        $datos=[
+            "nombrecompleto"=>$_POST['nombrecompleto'],
+            "correo"=>$_POST['correo'],
+            "telefono"=>$_POST['telefono'],
+            "direccion"=>$_POST['direccion'],
+            "estado"=>1
+        ];
+        $form=New \App\Models\FormModel();
+        $respuesta = $form->insertar($datos);
+        if($respuesta > 0){
+            return redirect()->to(base_url().'/form')->with('mensaje','1');
+        }else{
+            return redirect()->to(base_url().'/form')->with('mensaje','0');
+        }
 
-    // Crear un arreglo con los datos
-    $datos = array(
-        'nombre' => $nombre,
-        'correo' => $correo,
-        'telefono' => $telefono,
-        'direccion' => $direccion
-    );
-
-    // Cargar el modelo de la base de datos
-    $this->load->model('FormModel');
-
-    // Insertar los datos en la base de datos
-    $resultado = $this->FormModel->insertar($datos);
-
-    // Verificar si la inserción fue exitosa
-    if ($resultado) {
-        echo 'Los datos se han insertado correctamente.';
-    } else {
-        echo 'Ha ocurrido un error al insertar los datos.';
+        
     }
-}
+
+    public function obtenerNombre($form_id) {
+		$data = ["form_id" => $form_id];
+		$form=New \App\Models\FormModel();
+		$respuesta = $form->obtenerNombre($data);
+
+		$datos = ["datos" => $respuesta];
+
+		return view('actualizar', $datos);
+	}
+
+    public function actualizar(){
+		$datos = 
+        [
+            "nombrecompleto"=>$_POST['nombrecompleto'],
+            "correo"=>$_POST['correo'],
+            "telefono"=>$_POST['telefono'],
+            "direccion"=>$_POST['direccion'],
+        ];
+		$form_id = $_POST['form_id'];
+
+		$form=New \App\Models\FormModel();
+
+		$respuesta = $form->actualizar($datos, $form_id);
+
+		if ($respuesta) {
+			return redirect()->to(base_url().'/form')->with('mensaje','2');
+		} else {
+			return redirect()->to(base_url().'/form')->with('mensaje','3');
+		}
+	}
+
+    public function eliminar($form_id){
+		$form=New \App\Models\FormModel();
+		$data = ["form_id" => $form_id];
+
+		$respuesta = $form->eliminar($data);
+
+		if ($respuesta) {
+			return redirect()->to(base_url().'/form')->with('mensaje','4');
+		} else {
+			return redirect()->to(base_url().'/form')->with('mensaje','5');
+		}
+	}
 }

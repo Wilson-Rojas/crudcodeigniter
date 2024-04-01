@@ -231,7 +231,7 @@
             <div class="row mx-auto">
                 <div class="col-md-12">
                     <label class="form-label">Nombre Completo</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="Nombre"  id="">
+                    <input type="text" class="form-control" name="nombrecompleto" placeholder="Nombre"  id="">
                     <label class="form-label">Telefono de Contacto</label>
                     <input type="text" class="form-control" name="telefono"  placeholder="Telefono" id="">
                     <label class="form-label" >Dirección</label>
@@ -249,18 +249,31 @@
     <div class="row">
         <h2>Personas</h2>
         
-        <table class="table table-striped">
-            <tr>
-                <th>Nombre Completo</th>
-                <th>Celular</th>
-                <th>Correo</th>
-                <th>Direccion</th>
-                <th>Acciones</th>
-            </tr>
-            <tr>
-
-            </tr>
-        </table>
+        <table class="table table-hover table-bordered">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Direccionth>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    <?php foreach($datos as $key): ?>
+                        <tr>
+                            <td><?php echo $key->nombrecompleto ?></td>
+                            <td><?php echo $key->direccion ?></td>
+                            <td><?php echo $key->correo ?></td>
+                            <td><?php echo $key->telefono ?></td>
+                            <td>
+                                <a href="<?php echo base_url().'/obtenerNombre/'.$key->form_id ?>" class="btn btn-warning btn-sm">Editar</a>
+                            </td>
+                            <td>
+                                <a href="<?php echo base_url().'/eliminar/'.$key->form_id ?>" class="btn btn-danger btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </table>
+    
     
     </div>
 </section>
@@ -295,16 +308,22 @@
 
 <!-- SCRIPTS -->
 
-<script {csp-script-nonce}>
-    document.getElementById("menuToggle").addEventListener('click', toggleMenu);
-    function toggleMenu() {
-        var menuItems = document.getElementsByClassName('menu-item');
-        for (var i = 0; i < menuItems.length; i++) {
-            var menuItem = menuItems[i];
-            menuItem.classList.toggle("hidden");
+    <script type="text/javascript">
+        let mensaje = '<?php echo $mensaje ?>';
+        if (mensaje == '1') {
+            swal(':D','Agregado con exito!','success');
+        } else if (mensaje == '0'){
+            swal(':(','Fallo al agregar!','error');
+        } else if (mensaje == '2'){
+            swal(':D','Actualizado con exito!','success');
+        } else if (mensaje == '3'){
+            swal(':(','Fallo al Actualizar!','error');
+        } else if (mensaje == '4'){
+            swal(':D','Eliminado con exito!','success');
+        } else if (mensaje == '5'){
+            swal(':(','Fallo al eliminar!','error');
         }
-    }
-</script>
+    </script>
 
 <!-- -->
 

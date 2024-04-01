@@ -31,6 +31,10 @@ class AddForm extends Migration
                 'type' => 'TEXT',
                 'null' => true,
             ],
+            'estado' => [
+                'type' => 'BOOLEAN',
+                'default' => 1,
+            ],
         ]);
         $this->forge->addKey('form_id', true);
         $this->forge->createTable('form');
