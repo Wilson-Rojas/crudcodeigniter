@@ -22,7 +22,15 @@ class FormController extends BaseController
 
     public function store()
     {
-        
+        $reglas=[
+            'nombrecompleto'=>'required',
+            'correo'=>'required',
+            'telefono'=>'required',
+        ];
+        if(!$this->validate($reglas)){
+            return redirect()->back()->withInput(); 
+              
+        }
         $datos=[
             "nombrecompleto"=>$_POST['nombrecompleto'],
             "correo"=>$_POST['correo'],

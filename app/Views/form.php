@@ -252,7 +252,7 @@
         <table class="table table-hover table-bordered">
                         <tr>
                             <th>Nombre</th>
-                            <th>Direccionth>
+                            <th>Direccion</th>
                             <th>Correo</th>
                             <th>Telefono</th>
                             <th>Editar</th>
@@ -323,6 +323,13 @@
         } else if (mensaje == '5'){
             swal(':(','Fallo al eliminar!','error');
         }
+    </script>
+    <script>
+        $( document ).on( "ajaxSend", function( event, jqxhr, settings ) {
+            if ( settings.url == "ajax/test.html" ) {
+                $( ".log" ).text( "Triggered ajaxSend handler." );
+            }
+        } );
     </script>
 
 <!-- -->

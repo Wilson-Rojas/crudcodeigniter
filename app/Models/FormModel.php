@@ -14,7 +14,7 @@ class FormModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['nombrecompleto','direccion','correo','telefono','estado'];
+    protected $allowedFields = ['nombrecompleto','direccion','telefono','correo','estado'];
 
     protected bool $allowEmptyInserts = false;
 
