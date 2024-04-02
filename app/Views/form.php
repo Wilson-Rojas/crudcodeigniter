@@ -369,6 +369,7 @@
                                 '</tr>';
                             // Agregar la nueva fila a la tabla
                             $("#tablaRegistros tbody").append(newRow);
+                            //resetear valores
                             $("#nombre").val("");
                             $("#telefono").val("");
                             $("#correo").val("");
@@ -457,6 +458,7 @@
                                         '</tr>';
                             // Agregar la nueva fila a la tabla
                             $("#tablaRegistros tbody").append(newRow);
+                            //resetear valores
                             $("#nombre").val("");
                             $("#telefono").val("");
                             $("#correo").val("");
