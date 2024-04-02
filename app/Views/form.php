@@ -248,8 +248,7 @@
     
     <div class="row">
         <h2>Personas</h2>
-        
-        <table class="table table-hover table-bordered">
+        <table class="table table-hover table-bordered" id="tablaRegistros">
             <tr>
                 <th>Nombre</th>
                 <th>Direccion</th>
@@ -259,7 +258,7 @@
                 <th>Eliminar</th>
             </tr>
             <?php foreach($datos as $key): ?>
-                <tr>
+                <tr id="fila-<?php echo $key->form_id ?>">
                     <td><?php echo $key->nombrecompleto ?></td>
                     <td><?php echo $key->direccion ?></td>
                     <td><?php echo $key->correo ?></td>
@@ -337,7 +336,12 @@
                     success: function(response){
                         // Manejar la respuesta del servidor
                         console.log(response);
-                        // Por ejemplo, actualizar la interfaz de usuario si es necesario
+                        // actualizar la interfaz de usuario si es necesario
+                        if (response.success) { 
+                            $("#fila-" + formId).remove();
+                        }else {
+                            console.error(xhr.responseText);
+                        }
                     },
                     error: function(xhr, status, error){
                         // Manejar errores de la solicitud
@@ -346,7 +350,6 @@
                 });
             });
         });
-
     </script>
 
 </body>
