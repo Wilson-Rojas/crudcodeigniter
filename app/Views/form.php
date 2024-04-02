@@ -368,6 +368,15 @@
                                         '</tr>';
                             // Agregar la nueva fila a la tabla
                             $("#tablaRegistros tbody").append(newRow);
+                            $("#tablaRegistros tbody").append(newRow);
+                            $("#nombre").val("");
+                            $("#telefono").val("");
+                            $("#correo").val("");
+                            $("#direccion").val("");
+                            $("#form_id").val("");
+
+                            $("#botonActualizar").hide().removeData("form_id");
+                            $("#botonSave").show();
                         }
                     },
                     error: function(xhr, status, error){
@@ -448,6 +457,15 @@
                                         '</tr>';
                             // Agregar la nueva fila a la tabla
                             $("#tablaRegistros tbody").append(newRow);
+                            $("#nombre").val("");
+                            $("#telefono").val("");
+                            $("#correo").val("");
+                            $("#direccion").val("");
+                            $("#form_id").val("");
+
+                            $("#botonActualizar").hide().removeData("form_id");
+                            $("#botonSave").show();
+
                         }
                     },
                 });
