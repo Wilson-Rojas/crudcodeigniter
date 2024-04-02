@@ -47,6 +47,7 @@ class FormController extends BaseController
             
             'message' => 'Datos guardados correctamente'
         );
+        // Preparar los datos para la tabla
         $data = array(
             'id' => $respuesta->form_id,
             'nombrecompleto' => $respuesta->nombrecompleto,
