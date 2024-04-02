@@ -80,7 +80,7 @@ class FormController extends BaseController
 		}
 	}
 
-    public function eliminar($form_id){
+    public function eliminar1($form_id){
 		$form=New \App\Models\FormModel();
 		$data = ["form_id" => $form_id];
 
@@ -92,4 +92,24 @@ class FormController extends BaseController
 			return redirect()->to(base_url().'/form')->with('mensaje','5');
 		}
 	}
+
+    public function eliminar(){
+        $formId = $_POST['form_id'];
+        //$formId = $this->input->post('form_id');
+    
+        $form=New \App\Models\FormModel();
+		$data = ["form_id" => $formId];
+
+		$respuesta = $form->eliminar($data);
+
+
+        $response = array(
+            'success' => true,
+            'message' => 'Elemento eliminado correctamente'
+        );
+    
+        // Enviar respuesta en formato JSON
+        echo json_encode($response);
+    }
+    
 }

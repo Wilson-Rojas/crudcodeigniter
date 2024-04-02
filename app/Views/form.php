@@ -250,31 +250,29 @@
         <h2>Personas</h2>
         
         <table class="table table-hover table-bordered">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Direccion</th>
-                            <th>Correo</th>
-                            <th>Telefono</th>
-                            <th>Editar</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    <?php foreach($datos as $key): ?>
-                        <tr>
-                            <td><?php echo $key->nombrecompleto ?></td>
-                            <td><?php echo $key->direccion ?></td>
-                            <td><?php echo $key->correo ?></td>
-                            <td><?php echo $key->telefono ?></td>
-                            <td>
-                                <a href="<?php echo base_url().'/obtenerNombre/'.$key->form_id ?>" class="btn btn-warning btn-sm">Editar</a>
-                            </td>
-                            <td>
-                                <a href="<?php echo base_url().'/eliminar/'.$key->form_id ?>" class="btn btn-danger btn-sm">Eliminar</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </table>
-    
-    
+            <tr>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Correo</th>
+                <th>Telefono</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+            <?php foreach($datos as $key): ?>
+                <tr>
+                    <td><?php echo $key->nombrecompleto ?></td>
+                    <td><?php echo $key->direccion ?></td>
+                    <td><?php echo $key->correo ?></td>
+                    <td><?php echo $key->telefono ?></td>
+                    <td>
+                        <a href="<?php echo base_url().'/obtenerNombre/'.$key->form_id ?>" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm btnEliminar" data-id="<?php echo $key->form_id ?>">Eliminar</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
     </div>
 </section>
 
@@ -324,15 +322,32 @@
             swal(':(','Fallo al eliminar!','error');
         }
     </script>
+    <!--Importamos AJAX-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $( document ).on( "ajaxSend", function( event, jqxhr, settings ) {
-            if ( settings.url == "ajax/test.html" ) {
-                $( ".log" ).text( "Triggered ajaxSend handler." );
-            }
-        } );
-    </script>
+        $(document).ready(function(){
+            $(".btnEliminar").click(function(){
+                var formId = $(this).data("id");
+                console.log(formId);
+                $.ajax({
+                    url: "<?php echo base_url('/eliminar');?>",
+                    type: "POST",
+                    data: {form_id: formId},
+                    dataType: "json",
+                    success: function(response){
+                        // Manejar la respuesta del servidor
+                        console.log(response);
+                        // Por ejemplo, actualizar la interfaz de usuario si es necesario
+                    },
+                    error: function(xhr, status, error){
+                        // Manejar errores de la solicitud
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
 
-<!-- -->
+    </script>
 
 </body>
 </html>
