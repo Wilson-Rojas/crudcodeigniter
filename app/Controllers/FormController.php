@@ -40,11 +40,23 @@ class FormController extends BaseController
         ];
         $form=New \App\Models\FormModel();
         $respuesta = $form->insertar($datos);
-        if($respuesta > 0){
-            return redirect()->to(base_url().'/form')->with('mensaje','1');
-        }else{
-            return redirect()->to(base_url().'/form')->with('mensaje','0');
-        }
+        
+        // Preparar la respuesta
+        $response = array(
+            'success' => true,
+            
+            'message' => 'Datos guardados correctamente'
+        );
+        $data = array(
+            'id' => $respuesta->form_id,
+            'nombrecompleto' => $respuesta->nombrecompleto,
+            'correo' => $respuesta->correo,
+            'telefono' => $respuesta->telefono,
+            'direccion' => $respuesta->direccion
+        );
+        
+        // Enviar respuesta en formato JSON
+        echo json_encode($response,$data);
 
         
     }
