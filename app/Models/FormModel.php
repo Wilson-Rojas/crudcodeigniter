@@ -34,14 +34,25 @@ class FormModel extends Model
         $Formulario=$this->db->table('form');
         $Formulario->insert($datos);
 
-        return $this->db->insertID();
+        $insertID = $this->db->insertID();
+        // Realizar una consulta para obtener los datos del formulario recién insertados
+        $query = $this->db->query("SELECT * FROM form WHERE form_id = $insertID");
+        $nuevosDatos = $query->getRow();
+
+        return $nuevosDatos;
     }
 
     public function actualizar($data, $form_id) {
         $form = $this->db->table('form');
         $form->set($data);
         $form->where('form_id', $form_id);
-        return $form->update();
+        $form->update();
+
+        // Obtener el modelo actualizado
+        $updatedForm = $this->db->table('form')->where('form_id', $form_id)->get()->getRow();
+
+        return $updatedForm;
+
     }
 
     public function obtenerNombre($data) {

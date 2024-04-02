@@ -228,17 +228,19 @@
         <form action="<?=base_url().'save'?>" method="POST" id="formulario">
             <div class="row mx-auto">
                 <div class="col-md-12">
+                    <input type="text" class="form-control" name="form_id" placeholder="id"  id="form_id"><!--Oculto Siempre-->
                     <label class="form-label">Nombre Completo</label>
-                    <input type="text" class="form-control" name="nombrecompleto" placeholder="Nombre"  id="">
+                    <input type="text" class="form-control" name="nombrecompleto" placeholder="Nombre"  id="nombre">
                     <label class="form-label">Telefono de Contacto</label>
-                    <input type="text" class="form-control" name="telefono"  placeholder="Telefono" id="">
+                    <input type="text" class="form-control" name="telefono"  placeholder="Telefono" id="telefono">
                     <label class="form-label" >Dirección</label>
-                    <input type="text" class="form-control" name="direccion"  placeholder="Dirección" id="">
+                    <input type="text" class="form-control" name="direccion"  placeholder="Dirección" id="direccion">
                     <label class="form-label" >Correo</label>
-                    <input type="email" class="form-control" name="correo" placeholder="example@email.com" id=""> 
+                    <input type="email" class="form-control" name="correo" placeholder="example@email.com" id="correo"> 
                     <br>
                     <!--<button class="btn btn-primary mb-3" type="submit" >Guardar</button>-->
-                    <button type="button"  class="btn btn-primary btnSave" data-id="guardar">Guardar</button>
+                    <button type="button"  class="btn btn-success btnSave" id="botonSave" data-id="guardar">Guardar</button>
+                    <button type="button" class="btn btn-primary btnUpdate" id="botonActualizar" data-id="update">Actualizar</button>
                 </div>
             </div>
         </form>
@@ -262,7 +264,7 @@
                     <td><?php echo $key->correo ?></td>
                     <td><?php echo $key->telefono ?></td>
                     <td>
-                        <a href="<?php echo base_url().'/obtenerNombre/'.$key->form_id ?>" class="btn btn-warning btn-sm">Editar</a>
+                        <button type="button" class="btn btn-warning  btnEdit btn-sm" data-id="<?php echo $key->form_id ?>">Editar</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal-<?php echo $key->form_id ?>">
@@ -345,44 +347,113 @@
     <!--Save-->
     <script>
         $(document).ready(function(){
-        $(".btnSave").click(function(){
-            // Obtener los datos del formulario
-            var formData = $("#formulario").serialize();
-            console.log(formData);
-            $.ajax({
-                url: "<?php echo base_url('save');?>", // URL del controlador para procesar la solicitud AJAX
-                type: "POST",
-                data: formData, // Datos del formulario
-                dataType: "json",
-                success: function(response){
-                    // Manejar la respuesta del servidor
-                    console.log(response);
-                    if (response.success){
-                        // Crear una nueva fila con los datos del formulario
-                        var newRow = '<tr id="fila-' + data.id + '">' +
-                                        '<td>' + data.nombrecompleto + '</td>' +
-                                        '<td>' + data.telefono + '</td>' +
-                                        '<td>' + data.direccion + '</td>' +
-                                        '<td>' + data.correo + '</td>' +
-                                        '<td>' +'<a href="#" class="btn btn-warning btn-sm">Editar</a>'+'</td>' +
-                                        '<td>'
-                                            '<button class="btn btn-danger btn-sm btnEliminar" data-id="' + data.id + '">Eliminar</button>' +
-                                        '</td>' +
-                                    '</tr>';
-                        // Agregar la nueva fila a la tabla
-                        $("#tablaRegistros tbody").append(newRow);
+            $(".btnSave").click(function(){
+                // Obtener los datos del formulario
+                var formData = $("#formulario").serialize();
+                $.ajax({
+                    url: "<?php echo base_url('save');?>", // URL del controlador para procesar la solicitud AJAX
+                    type: "POST",
+                    data: formData, // Datos del formulario
+                    dataType: "json",
+                    success: function(response){
+                        // Manejar la respuesta del servidor
+                        var datos = response.datos;
+                        if (response.success){
+                            // Crear una nueva fila con los datos del formulario
+                            var newRow = '<tr id="fila-' + datos.form_id + '">' +
+                                            '<td>' + datos.nombrecompleto + '</td>' +
+                                            '<td>' + datos.telefono + '</td>' +
+                                            '<td>' + datos.direccion + '</td>' +
+                                            '<td>' + datos.correo + '</td>' +
+                                        '</tr>';
+                            // Agregar la nueva fila a la tabla
+                            $("#tablaRegistros tbody").append(newRow);
+                        }
+                    },
+                    error: function(xhr, status, error){
+                        // Manejar errores de la solicitud
+                        console.error(xhr.responseText);
                     }
-                },
-                error: function(xhr, status, error){
-                    // Manejar errores de la solicitud
-                    console.error(xhr.responseText);
-                }
+                });
             });
         });
-    });
+    </script>
+    <!--OCULTAR-->
+    <script>
+        $(document).ready(function() {
+            // Ocultar el botón al cargar la página
+            $("#botonActualizar").hide();
+            $("#botonSave").show();
+            $("#form_id").hide();
+        });
+    </script>
+    <!--Cargar nombres para update-->
+    <script>
+        $(document).ready(function(){
+            $(".btnEdit").click(function(){
+                // Obtener el ID del formulario
+                var formId = $(this).data("id");
+                
+                $.ajax({
+                    url: "<?php echo base_url('/edit');?>",
+                    type: "POST",
+                    data: {form_id: formId},
+                    dataType: "json",
+                    success: function(response){
+                        // Manejar la respuesta del servidor
+                        var datos = response.datos[0];
+                        // Aquí puedes usar los datos como necesites
+                        $("#nombre").val(datos.nombrecompleto);
+                        $("#telefono").val(datos.telefono);
+                        $("#correo").val(datos.correo);
+                        $("#direccion").val(datos.direccion);
+                        $("#form_id").val(datos.form_id);
+                        $("#botonSave").hide();
+                        $("#botonActualizar").show().data("form_id", datos.form_id);
+                    },
+                    error: function(xhr, status, error){
+                        // Manejar errores de la solicitud
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
 
     </script>
-
+    <!--Update-->
+    <script>
+        $(document).ready(function(){
+            $(".btnUpdate").click(function(){
+                // Obtener los datos del formulario
+                var formData = $("#formulario").serialize();
+                console.log(formData);
+                $.ajax({
+                    url: "<?php echo base_url('actualizar');?>", // URL del controlador para procesar la solicitud AJAX
+                    type: "POST",
+                    data: formData, // Datos del formulario
+                    dataType: "json",
+                    success: function(response){
+                        // Manejar la respuesta del servidor
+                        console.log(response);
+                        var datos = response.datos;
+                        if (response.success){
+                            //borrar las celdas existentes
+                            $("#fila-" + datos.form_id ).remove();
+                            // Crear una nueva fila con los datos del formulario
+                            var newRow = '<tr id="fila-' + datos.form_id + '">' +
+                                            '<td>' + datos.nombrecompleto + '</td>' +
+                                            '<td>' + datos.telefono + '</td>' +
+                                            '<td>' + datos.direccion + '</td>' +
+                                            '<td>' + datos.correo + '</td>' +
+                                        '</tr>';
+                            // Agregar la nueva fila a la tabla
+                            $("#tablaRegistros tbody").append(newRow);
+                        }
+                    },
+                });
+            });
+        });
+    </script>
     <!--Delete-->
     <script>
         $(document).ready(function(){

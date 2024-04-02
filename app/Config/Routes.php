@@ -12,4 +12,5 @@ $routes->post('save', [FormController::class, 'store']);
 $routes->post('eliminar', [FormController::class, 'eliminar']);
 //$routes->get('/eliminar/(:any)', 'FormController::eliminar/$1');
 $routes->post('/actualizar',[FormController::class, 'actualizar']);
-$routes->get('/obtenerNombre/(:any)', 'FormController::obtenerNombre/$1');
+$routes->post('/edit',[FormController::class, 'cargarnombres']);
+//$routes->get('/edit', 'FormController::cargarnombres');

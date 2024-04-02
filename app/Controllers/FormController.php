@@ -12,6 +12,7 @@ class FormController extends BaseController
         $form=New \App\Models\FormModel();
         $datos=$form->listarnombres();
         $mensaje = session('mensaje');
+        
         $data=[
             "datos"=>$datos,
             "mensaje" => $mensaje
@@ -40,24 +41,17 @@ class FormController extends BaseController
         ];
         $form=New \App\Models\FormModel();
         $respuesta = $form->insertar($datos);
-        
         // Preparar la respuesta
         $response = array(
             'success' => true,
             
-            'message' => 'Datos guardados correctamente'
+            'message' => 'Datos guardados correctamente',
+            'datos' => $respuesta
         );
         // Preparar los datos para la tabla
-        $data = array(
-            'id' => $respuesta->form_id,
-            'nombrecompleto' => $respuesta->nombrecompleto,
-            'correo' => $respuesta->correo,
-            'telefono' => $respuesta->telefono,
-            'direccion' => $respuesta->direccion
-        );
         
         // Enviar respuesta en formato JSON
-        echo json_encode($response,$data);
+        echo json_encode($response);
 
         
     }
@@ -72,9 +66,27 @@ class FormController extends BaseController
 		return view('actualizar', $datos);
 	}
 
+    public function cargarnombres() {
+        $formId = $_POST['form_id'];
+        $data = ["form_id" => $formId];
+        $form = new \App\Models\FormModel();
+        $respuesta = $form->obtenerNombre($data);
+
+        $response = array(
+            'success' => true,
+            'message' => 'Datos traidos correctamente',
+            'datos' => $respuesta
+        );
+
+        // Enviar respuesta en formato JSON
+        echo json_encode($response);
+
+	}
+
     public function actualizar(){
 		$datos = 
         [
+            "form_id"=>$_POST['form_id'],
             "nombrecompleto"=>$_POST['nombrecompleto'],
             "correo"=>$_POST['correo'],
             "telefono"=>$_POST['telefono'],
@@ -86,24 +98,17 @@ class FormController extends BaseController
 
 		$respuesta = $form->actualizar($datos, $form_id);
 
-		if ($respuesta) {
-			return redirect()->to(base_url().'/form')->with('mensaje','2');
-		} else {
-			return redirect()->to(base_url().'/form')->with('mensaje','3');
-		}
-	}
-
-    public function eliminar1($form_id){
-		$form=New \App\Models\FormModel();
-		$data = ["form_id" => $form_id];
-
-		$respuesta = $form->eliminar($data);
-
-		if ($respuesta) {
-			return redirect()->to(base_url().'/form')->with('mensaje','4');
-		} else {
-			return redirect()->to(base_url().'/form')->with('mensaje','5');
-		}
+		$response = array(
+            'success' => true,
+            
+            'message' => 'Datos guardados correctamente',
+            
+            'datos' => $respuesta
+        );
+        // Preparar los datos para la tabla
+        
+        // Enviar respuesta en formato JSON
+        echo json_encode($response);
 	}
 
     public function eliminar(){
