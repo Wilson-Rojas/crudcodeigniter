@@ -360,14 +360,14 @@
                         var datos = response.datos;
                         if (response.success){
                             // Crear una nueva fila con los datos del formulario
-                            var newRow = '<tr id="fila-' + datos.form_id + '">' +
-                                            '<td>' + datos.nombrecompleto + '</td>' +
-                                            '<td>' + datos.telefono + '</td>' +
-                                            '<td>' + datos.direccion + '</td>' +
-                                            '<td>' + datos.correo + '</td>' +
-                                        '</tr>';
+                            var newRow = 
+                                '<tr id="fila-' + datos.form_id + '">' +
+                                    '<td>' + datos.nombrecompleto + '</td>' +
+                                    '<td>' + datos.telefono + '</td>' +
+                                    '<td>' + datos.direccion + '</td>' +
+                                    '<td>' + datos.correo + '</td>' +
+                                '</tr>';
                             // Agregar la nueva fila a la tabla
-                            $("#tablaRegistros tbody").append(newRow);
                             $("#tablaRegistros tbody").append(newRow);
                             $("#nombre").val("");
                             $("#telefono").val("");
